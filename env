@@ -1,0 +1,18 @@
+################################################################################
+
+# Connection options
+PGHOST=my_pg_instance.postgres.database.azure.com
+PGPORT=5432
+PGUSER=<myusername>
+PGPASSWORD=<mypassword>
+PGSSLMODE=require
+
+# Comma separated list of databases. Do not leave space between names
+# Leave blank assumes all user databases
+PGDATABASES=<mydb1>[,<mydb2>...]
+
+# Number of parallel processes for vacuum and reindex
+# Can be set to number of vCPUs of the PostgreSQL server
+PGJOBS=4
+
+################################################################################
