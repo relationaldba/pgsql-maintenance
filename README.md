@@ -56,14 +56,14 @@ Follow the below steps to get up and running in minutes:
   ```shell
   docker build --pull --rm -f "Dockerfile" -t pgsql-maintenance:latest "."
   ```
-- Prepare an env file in the pgsql-maintenance folder. You can edit the sample env file provided in the repo and add your own configurations.
+- Prepare a `.env` file in the pgsql-maintenance folder. You can edit the sample env file `.env.example` provided in the repo and add your own configurations. The file should be named `.env`
 
 ### Run using docker
 
 - Ensure the pre-requisites are completed
 - Run the script in docker using the below command. The env file is passed to docker container using the option `--env-file` and an action argument needs to be added at the end.
   ```shell
-  docker run --rm --env-file ./env --name <container_name> pgsql-maintenance:latest <action>
+  docker run --rm --env-file ./.env --name <container_name> pgsql-maintenance:latest <action>
   ```
 - The option `--rm` ensures that the docker container is deleted after the script completes execution.
 
@@ -71,19 +71,19 @@ Follow the below steps to get up and running in minutes:
 
 - To run vacuum + analyze:
   ```shell
-  docker run --rm --env-file ./env --name pgsql-vacuumdb pgsql-maintenance:latest vacuum_db
+  docker run --rm --env-file ./.env --name pgsql-vacuumdb pgsql-maintenance:latest vacuum_db
   ```
 - To run vacuum on large objects:
   ```shell
-  docker run --rm --env-file ./env --name pgsql-vacuumlo pgsql-maintenance:latest vacuum_lo
+  docker run --rm --env-file ./.env --name pgsql-vacuumlo pgsql-maintenance:latest vacuum_lo
   ```
 - To run reindex:
   ```shell
-  docker run --rm --env-file ./env --name pgsql-reindexdb pgsql-maintenance:latest reindex_db
+  docker run --rm --env-file ./.env --name pgsql-reindexdb pgsql-maintenance:latest reindex_db
   ```
 - To run analyze only:
   ```shell
-  docker run --rm --env-file ./env --name pgsql-analyzedb pgsql-maintenance:latest analyze_db
+  docker run --rm --env-file ./.env --name pgsql-analyzedb pgsql-maintenance:latest analyze_db
   ```
 
 ### Run using docker-compose
@@ -126,7 +126,7 @@ The docker containers can be run on a schedule using cron.
 - To run vacuumdb using docker every Saturday night at 11:00 PM, edit the cron file by running `crontab -e` and add the below line to the file.
 
   ```shell
-  00  23  *  *  6  cd /home/<user>/pgsql-maintenance && docker run --rm --env-file ./env --name pgsql-vacuumdb pgsql-maintenance:latest vacuum_db
+  00  23  *  *  6  cd /home/<user>/pgsql-maintenance && docker run --rm --env-file ./.env --name pgsql-vacuumdb pgsql-maintenance:latest vacuum_db
   ```
 
 - To run vacuumdb using `docker compose` every Saturday night at 11:00 PM, edit the cron file by running `crontab -e` and add the below line to the file.
@@ -154,9 +154,9 @@ Follow the below steps to get up and running in minutes:
   ```shell
   chmod +x pgsql-maintenance.sh
   ```
-- Prepare an env file in the pgsql-maintenance folder. You can edit the sample env file provided in the repo and add your own configurations. Export the env variables using the below command
+- Prepare a `.env` file in the pgsql-maintenance folder. You can edit the sample env file `.env.example` provided in the repo and add your own configurations. The file should be named `.env`. Export the env variables using the below command
   ```shell
-  export $(xargs < ./env)
+  export $(xargs < ./.env)
   ```
 
 ### Run the shell script
@@ -195,5 +195,5 @@ The script can be run on a schedule using cron.
 - To run vacuumdb every Saturday night at 11:00 PM, edit the cron file by running `crontab -e` and add the below line to the file.
 
   ```shell
-  00  23  *  *  6  cd /home/<user>/pgsql-maintenance && export $(xargs < ./env) && ./pgsql-maintenance.sh vacuum_db
+  00  23  *  *  6  cd /home/<user>/pgsql-maintenance && export $(xargs < ./.env) && ./pgsql-maintenance.sh vacuum_db
   ```

@@ -76,7 +76,7 @@ function validate_config() {
         && [[ ${ACTION} != "reindex_sys" ]]
     then
         err "Invalid/missing argument";
-        err "Usage can be as under:";
+        err "Usage:";
         err "pgsql-maintenance.sh vacuum_db      # run vacuum + analyze              #";
         err "pgsql-maintenance.sh analyze_db     # run analyze only                  #";
         err "pgsql-maintenance.sh vacuum_lo      # run vacuum largeobjects           #";

@@ -6,26 +6,26 @@ services:
     hostname: pgsql-vacuumdb
     command: vacuum_db
     env_file:
-      - env
+      - .env
   pgsql-vacuumlo:
     image: pgsql-maintenance:latest
     container_name: pgsql-vacuumlo
     hostname: pgsql-vacuumlo
     command: vacuum_lo
     env_file:
-      - env
+      - .env
   pgsql-analyzedb:
     image: pgsql-maintenance:latest
     container_name: pgsql-analyzedb
     hostname: pgsql-analyzedb
     command: analyze_db
     env_file:
-      - env
+      - .env
   pgsql-reindexdb:
     image: pgsql-maintenance:latest
     container_name: pgsql-reindexdb
     hostname: pgsql-reindexdb
     command: reindex_db
     env_file:
-      - env
+      - .env
   
