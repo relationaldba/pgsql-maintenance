@@ -1,0 +1,39 @@
+# Config files
+.DS_Store
+.vscode/*
+.fleet/*
+
+# Env files
+.env
+
+# Archived files
+.archive/*
+
+# Log files
+*.log
+*.log.gz
+*.log.tar.gz
+
+# Temp files
+*.tmp
+*.temp
+*.xyz
+
+# CSV Files
+*.csv
+
+# Zip files
+*.tar.gz
+*.gz
+*.zip
+*.7zip
+*.rar
+
+# Certs/Keys
+*.pem
+*.ppk
+*.pcs
+*.pub
+*.priv
+*.cer
+*.crt

@@ -89,7 +89,7 @@ Follow the below steps to get up and running in minutes:
 ### Run using docker-compose
 
 - Ensure the pre-requisites are completed
-- Prepare a `docker-compose.yaml` file and describe the services. You can use the sample `docker-compose .yaml` provided in the repo. The YAML file has a list of all services and their action arguments.
+- Prepare a `docker-compose.yaml` file and describe the services. You can use the sample `docker-compose.yaml` provided in the repo. The YAML file has a list of all services and their action arguments.
 - The YAML file expects the env file in the same directory and is described in the `env_file:` section.
 - The action argument is passed to the container using the `command:` element of the compose file.
 - Run the script using `docker-compose` using the below command.

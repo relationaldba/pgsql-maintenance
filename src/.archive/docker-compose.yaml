@@ -1,0 +1,47 @@
+version: '3.7'
+services:
+  pgsql-vacuumdb:
+    image: pgsql-maintenance:latest
+    container_name: pgsql-vacuumdb
+    hostname: pgsql-vacuumdb
+    command: vacuum_db
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "chpw-dev-app", "service": "pgsql-vacuumdb"}]'
+      com.datadoghq.tags.env: 'dev'
+      com.datadoghq.tags.service: 'pgsql-vacuumdb'
+    env_file:
+      - env
+  pgsql-vacuumlo:
+    image: pgsql-maintenance:latest
+    container_name: pgsql-vacuumlo
+    hostname: pgsql-vacuumlo
+    command: vacuum_lo
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "chpw-dev-app", "service": "pgsql-vacuumlo"}]'
+      com.datadoghq.tags.env: 'dev'
+      com.datadoghq.tags.service: 'pgsql-vacuumlo'
+    env_file:
+      - env
+  pgsql-analyzedb:
+    image: pgsql-maintenance:latest
+    container_name: pgsql-analyzedb
+    hostname: pgsql-analyzedb
+    command: analyze_db
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "chpw-dev-app", "service": "pgsql-analyzedb"}]'
+      com.datadoghq.tags.env: 'dev'
+      com.datadoghq.tags.service: 'pgsql-analyzedb'
+    env_file:
+      - env
+  pgsql-reindexdb:
+    image: pgsql-maintenance:latest
+    container_name: pgsql-reindexdb
+    hostname: pgsql-reindexdb
+    command: reindex_db
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "chpw-dev-app", "service": "pgsql-reindexdb"}]'
+      com.datadoghq.tags.env: 'dev'
+      com.datadoghq.tags.service: 'pgsql-reindexdb'
+    env_file:
+      - env
+  

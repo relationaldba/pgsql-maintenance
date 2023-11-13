@@ -32,10 +32,10 @@
 #
 ################################################################################
 
-# Get the action keyword in lower case
+# Get the action argument
 ACTION=$1;
 
-# Start recording the elapsed seconds using the bash inernal counter
+# Start recording the elapsed seconds using the bash's internal counter
 SECONDS=0;
 
 # Variable EXIT_CODE stores the outcome, 0 for success, else failure
@@ -63,7 +63,7 @@ function validate_config() {
     if [[ -z $PGHOST || -z $PGUSER || -z $PGPASSWORD ]]
     then
         err "Connection parameter(s) invalid or missing"
-        err "Ensure PGHOST, PGUSER, PGPASSWORD are correct.";
+        err "Verify the environment variables PGHOST, PGUSER and PGPASSWORD";
         return_code=1;
         return $return_code;
     fi
@@ -91,7 +91,7 @@ function validate_config() {
     then
         PGDATABASES=$( psql \
             --dbname="postgres" \
-            --command="SELECT string_agg(datname,',') FROM pg_database WHERE datdba> 10;" \
+            --command="SELECT string_agg(datname,',') FROM pg_database WHERE datdba> 10 and datistemplate = false;" \
             --tuples-only \
             --no-align );
 
