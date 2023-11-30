@@ -62,7 +62,7 @@ function validate_config() {
     # Verify if the PostgreSQL connection params are specified in the env variables/file
     if [[ -z $PGHOST || -z $PGUSER || -z $PGPASSWORD ]]
     then
-        err "Connection parameter(s) invalid or missing"
+        err "Connection parameter(s) invalid or missing";
         err "Verify the environment variables PGHOST, PGUSER and PGPASSWORD";
         return_code=1;
         return $return_code;
@@ -95,7 +95,7 @@ function validate_config() {
             --tuples-only \
             --no-align );
 
-        if [[ $? != 0 ]]
+        if (( $? != 0 ))
         then
             err "Failed to get the list of databases.";
             return_code=1;
@@ -108,33 +108,33 @@ function validate_config() {
 
 function reindex_db() {
 
-    local return_code=0;
+    local return_code=1;
     local database=$1;
 
     output=$(reindexdb --dbname="${database}" --jobs=$PGJOBS --concurrently 2>&1);
     return_code=$?;
 
-    [[ $return_code == 0 ]] && log "${output}" || err "${output}";
+    (( $return_code == 0 )) && log "${output}" || err "${output}";
 
     return $return_code;
 }
 
 function reindex_sys() {
 
-    local return_code=0;
+    local return_code=1;
     local database=$1;
 
     output=$(reindexdb --dbname="${database}" --system 2>&1);
     return_code=$?;
 
-    [[ $return_code == 0 ]] && log "${output}" || err "${output}";
+    (( $return_code == 0 )) && log "${output}" || err "${output}";
 
     return $return_code;
 }
 
 function vacuum_db() {
 
-    local return_code=0;
+    local return_code=1;
     local database=$1;
 
     output=$(vacuumdb --dbname="${database}" --analyze --jobs=$PGJOBS 2>&1);
@@ -142,41 +142,41 @@ function vacuum_db() {
     # TODO: add --parallel=parallel_workers
     return_code=$?;
 
-    [[ $return_code == 0 ]] && log "${output}" || err "${output}";
+    (( $return_code == 0 )) && log "${output}" || err "${output}";
 
     return $return_code;
 }
 
 function analyze_db() {
 
-    local return_code=0;
+    local return_code=1;
     local database=$1;
 
     output=$(vacuumdb --dbname="${database}" --analyze-only --analyze-in-stages --jobs=$PGJOBS 2>&1);
     # TODO: add --parallel=parallel_workers
     return_code=$?;
 
-    [[ $return_code == 0 ]] && log "${output}" || err "${output}";
+    (( $return_code == 0 )) && log "${output}" || err "${output}";
 
     return $return_code;
 }
 
 function vacuum_lo() {
 
-    local return_code=0;
+    local return_code=1;
     local database=$1;
 
     output=$(vacuumlo "${database}" 2>&1);
     return_code=$?;
 
-    [[ $return_code == 0 ]] && log "${output}" || err "${output}";
+    (( $return_code == 0 )) && log "${output}" || err "${output}";
 
     return $return_code;
 }
 
 # Validate the configuration 
 validate_config;
-[[ $? != 0 ]] && EXIT_CODE=1 && end $EXIT_CODE;
+(( $? != 0 )) && EXIT_CODE=1 && end $EXIT_CODE;
 
 # Log connection info
 log "PGHOST=${PGHOST}";
@@ -192,7 +192,7 @@ do
     # Run the maintenance action against the database
     $ACTION $database;
 
-    if [[ $? == 0 ]]
+    if (( $? == 0 ))
     then
         log "Completed for database ${database}";
     else
@@ -202,5 +202,5 @@ do
 
 done
 
-[[ $EXIT_CODE == 0 ]] && log "Exit code ${EXIT_CODE}" || err "Exit code ${EXIT_CODE}";
+(( $EXIT_CODE == 0 )) && log "Exit code ${EXIT_CODE}" || err "Exit code ${EXIT_CODE}";
 end $EXIT_CODE
