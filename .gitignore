@@ -8,6 +8,7 @@
 
 # Archived files
 .archive/*
+src/.archive/*
 
 # Log files
 *.log
